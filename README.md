@@ -1,4 +1,4 @@
 # PACKMAN
 
 
-![image](https://github.com/Kindiakova/PACKMAN/assets/75929765/2ae5d574-1dd7-4576-932e-9fbcebf77d54)
+![image](https://github.com/Kindiakova/PACKMAN/assets/75929765/e776e58d-c95e-476d-aa76-0e2d720a7449)
