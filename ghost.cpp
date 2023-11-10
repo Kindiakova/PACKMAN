@@ -129,13 +129,18 @@ void Ghost::moveright()
 
 bool Ghost::good(int i, int j)
 {
-   /* if (i < 0 || j < 0) {
-        return false;
+   if (i < 0 || j < 0) {
+        if (i < -1 || j < -1) return false;
+        if (i < 0) i = game->map_height - 1;
+        if (j < 0) j = game->map_width  - 1;
     }
 
     if (i >= game->map_height || j >= game->map_width) {
-        return false;
-    }*/
+        if (i > game->map_height || j > game->map_width)
+            return false;
+        if (i == game->map_height) i = 0;
+        if (j == game->map_width) j = 0;
+    }
 
     switch (game->map[i][j]->get_type()) {
     case Wall:
@@ -554,10 +559,8 @@ void Ghost::move()
     int x_remainder = (gh_x - game->geo_x) % W;   // remainder x pixel to fit a block
     int y_remainder = (gh_y - game->geo_y) % W;   // remainder y pixel to fit a block
 
-    /* When ghost completely fits a block,
-     * decide whether to change direction. */
+
     if (x_remainder == 0 && y_remainder == 0) {
-        // update ghost's coordinate in map
         _x = __x;
         _y = __y;
         if (is_released) {
