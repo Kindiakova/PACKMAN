@@ -79,6 +79,17 @@ bool isWall(int i, int j){
 }
 
 void rebuild_walls(){
+    if (isWall(0, 0) || isWall(0,map_width - 1) ||
+        isWall(map_height-1, 0) || isWall(map_height-1, map_width-1))
+     maze[0][0] = maze[0][map_width-1] = maze[map_height-1][0] = maze[map_height-1][map_width-1] = 1;
+
+    for (int i = 0; i < map_height; ++i)
+        if (isWall(i, 0) || isWall(i, map_width-1)
+            maze[i][0] = maze[i][map_width-1] = 1;
+
+    for (int j = 0; j < map_width; ++j)
+       if (isWall(0,) || isWall(i, map_width-1)
+            maze[0][j] = maze[map_height-1][j] = 1;
     for (int i = 0; i < map_height; ++i){
         for (int j = 0; j < map_width; ++j){
             if (isWall(i, j)){
@@ -92,8 +103,8 @@ void rebuild_walls(){
 
 void insert_pacman_and_superballs(){
      QVector<QPair<int,int> > postions;
-     for (int i = 0; i < map_height; ++i){
-         for (int j = 0; j < map_width; ++j)
+     for (int i = 1; i < map_height-1; ++i){
+         for (int j = 1; j < map_width-1; ++j)
              if (i >= 7 && i <= 12 && j >= 12 && j <= 16) continue;
              else if (maze[i][j] == 4) postions.append(QPair<int, int>(i, j));
      }
@@ -112,7 +123,7 @@ void insert_pacman_and_superballs(){
 
 void generate_map() {
 
-    while(balls_counter < 5){
+    while(balls_counter < 200){
         balls_counter = 0;
         maze.resize(map_height, QVector<int>(map_width, 1));
 
