@@ -148,16 +148,23 @@ void Pacman::eat_ball(int __y, int __x)
 }
 
 
-bool Pacman::good(int i, int j)
+bool Pacman::good(int ii, int jj)
 {
-    /*if (i < 0 || j < 0) {
-        return false;
-    }
+    int i = ii, j = jj;
+    qDebug() << i << " " << j;
+    if (i < 0 || j < 0) {
+         if (i < -1 || j < -1) return false;
+         if (i < 0) i = game->map_height - 1;
+         if (j < 0) j = game->map_width  - 1;
+     }
 
-    if (i >= game->map_height || j >= game->map_width) {
-        return false;
-    }*/
-
+     if (i >= game->map_height || j >= game->map_width) {
+         if (i > game->map_height || j > game->map_width)
+             return false;
+         if (i == game->map_height) i = 0;
+         if (j == game->map_width) j = 0;
+     }
+    qDebug() <<"(" << i << " " << j << ")";
     switch (game->map[i][j]->get_type()) {
     case Wall:
     case Gate:
@@ -177,13 +184,9 @@ void Pacman::move()
     int y_remainder = (pac_y - game->geo_y) % W;    // remainder y pixel to fit a block
     Dir next_dir = get_next_dir();
 
-    /* When pacman completely fits a block,
-     * decide whether to change direction. */
+
     if (x_remainder == 0) {
         if (y_remainder == 0) {
-            // When pacman completely fits a block,
-            // test if this block is a ball to eat.
-            // If all balls are eaten, win.
             eat_ball(__y, __x);
 
             // update pacman's coordinate in map
@@ -241,7 +244,7 @@ void Pacman::move()
         }
     }
 
-    /* Pacman keeps moving or stops when hitting wall */
+
     switch (dir) {
     case Stop:
         break;
